@@ -32,9 +32,7 @@ public class QuickUnion implements UnionFinder {
         }
         int firstRoot = getRoot(first);
         int secondRoot = getRoot(second);
-        if (firstRoot != secondRoot) {
-            nodes[secondRoot] = firstRoot;
-        }
+        nodes[secondRoot] = firstRoot;
     }
 
     @Override
@@ -43,9 +41,7 @@ public class QuickUnion implements UnionFinder {
         if (first >= nodes.length || second >= nodes.length) {
             throw new IllegalArgumentException();
         }
-        
-        
-        
+
         return getRoot(first) == getRoot(second);
     }
 
