@@ -5,37 +5,48 @@ package rstacey.algorithms.unionfind;
 
 public class QuickUnion implements UnionFinder {
 
-    private int[] points;
+    private int[] nodes;
 
     public QuickUnion(int size) throws IllegalArgumentException {
         if (size < 0) {
             throw new IllegalArgumentException();
         }
-        points = new int[size];
+        nodes = new int[size];
         for (int i = 0; i < size; i++) {
-            points[i] = i;
+            nodes[i] = i;
         }
     }
     
+    private int getRoot(int node) {
+        int currentNode = node;
+        while(nodes[currentNode] != currentNode) {
+            currentNode = nodes[currentNode];
+        }
+        return currentNode;
+    }
+      
     @Override
     public void union(int first, int second) throws IllegalArgumentException {
-        if (first >= points.length || second >= points.length) {
+        if (first >= nodes.length || second >= nodes.length) {
             throw new IllegalArgumentException();
         }
-        
-        int current = first;
-        if (points[first] != second) {
-            points[second] = first;
+        int firstRoot = getRoot(first);
+        int secondRoot = getRoot(second);
+        if (firstRoot != secondRoot) {
+            nodes[secondRoot] = firstRoot;
         }
     }
 
     @Override
     public boolean connected(int first, int second)
             throws IllegalArgumentException {
-        if (first >= points.length || second >= points.length) {
+        if (first >= nodes.length || second >= nodes.length) {
             throw new IllegalArgumentException();
         }
-        return points[first] == points[second];
+        
+        
+        
+        return getRoot(first) == getRoot(second);
     }
 
 }
