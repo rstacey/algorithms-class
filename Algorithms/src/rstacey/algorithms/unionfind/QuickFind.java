@@ -5,30 +5,30 @@ package rstacey.algorithms.unionfind;
 
 public class QuickFind implements UnionFinder {
 
-	private int[] points;
+	private int[] nodes;
 
 	public QuickFind(int size) throws IllegalArgumentException {
 		if (size < 0) {
 			throw new IllegalArgumentException();
 		}
-		points = new int[size];
+		nodes = new int[size];
 		for (int i = 0; i < size; i++) {
-			points[i] = i;
+			nodes[i] = i;
 		}
 	}
 	
 	@Override
 	public void union(int first, int second) throws IllegalArgumentException {
-		if (first >= points.length || second >= points.length) {
+		if (first >= nodes.length || second >= nodes.length) {
 			throw new IllegalArgumentException();
 		}
 		
 		if (!connected(first, second)) {
-			int oldBase = points[second];
-			int newBase = points[first];
-			for (int i = 0; i < points.length; i++) {
-				if (points[i] == oldBase) {
-					points[i] = newBase;
+			int oldBase = nodes[second];
+			int newBase = nodes[first];
+			for (int i = 0; i < nodes.length; i++) {
+				if (nodes[i] == oldBase) {
+					nodes[i] = newBase;
 				}
 			}
 		}		
@@ -36,10 +36,10 @@ public class QuickFind implements UnionFinder {
 
 	@Override
 	public boolean connected(int first, int second) throws IllegalArgumentException {
-		if (first >= points.length || second >= points.length) {
+		if (first >= nodes.length || second >= nodes.length) {
 			throw new IllegalArgumentException();
 		}
-		return points[first] == points[second];
+		return nodes[first] == nodes[second];
 	}
 
 }
