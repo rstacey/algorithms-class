@@ -6,14 +6,17 @@ package rstacey.algorithms.unionfind;
 public class QuickUnion implements UnionFinder {
 
     private int[] nodes;
+    private int[] sizes;
 
     public QuickUnion(int size) throws IllegalArgumentException {
         if (size < 0) {
             throw new IllegalArgumentException();
         }
         nodes = new int[size];
+        sizes = new int[size];
         for (int i = 0; i < size; i++) {
             nodes[i] = i;
+            sizes[i] = 1;
         }
     }
     
@@ -32,7 +35,13 @@ public class QuickUnion implements UnionFinder {
         }
         int firstRoot = getRoot(first);
         int secondRoot = getRoot(second);
-        nodes[secondRoot] = firstRoot;
+        if (sizes[firstRoot] < sizes[secondRoot]) {
+            nodes[secondRoot] = firstRoot;
+            sizes[firstRoot] += sizes[secondRoot];
+        } else {
+            nodes[firstRoot] = secondRoot;
+            sizes[secondRoot] += sizes[firstRoot];
+        }
     }
 
     @Override
